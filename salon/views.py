@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm,UserCreationForm
 from django.contrib import messages
 
 # Create your views here.
@@ -19,3 +19,12 @@ def salon(request):
     else:
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
+
+#sign up page view
+def signup_view(request):
+    if request.method == 'POST':
+        # Add your sign up logic here
+        return redirect('home') # Replace 'home' with the name of your home page
+    else:
+        form = UserCreationForm()
+    return render(request, 'signup.html', {'form': form})
