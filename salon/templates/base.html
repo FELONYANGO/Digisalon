@@ -1,0 +1,18 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% block title %}MYSALON{% endblock %}</title>
+  {% block styles %}
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+    {% endblock %}
+
+</head>
+<body>
+
+{% block content %}
+{% endblock %}
+
+</body>
+</htm
