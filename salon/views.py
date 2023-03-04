@@ -28,3 +28,14 @@ def signup_view(request):
     else:
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
+
+def password_reset_view(request):
+    if request.method == 'POST':
+        form = PasswordResetForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Check your email to reset your password.')
+            return redirect('login')
+    else:
+        form = PasswordResetForm()
+    return render(request, 'password_reset.html', {'form': form})
