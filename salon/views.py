@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm,UserCreationForm
 from django.contrib import messages
-
+from . forms import RegistrationForm
 # Create your views here.
 # def salon(request):
 #   template = loader.get_template('login.html')
@@ -22,12 +22,23 @@ def salon(request):
 
 #sign up page view
 def signup_view(request):
+    if request.method == 'GET':
+        
+        form = RegistrationForm()
+        return render(request,'signup.html',{'form': form}) # redirect to login page
     if request.method == 'POST':
-        # Add your sign up logic here
-        return redirect('home') # Replace 'home' with the name of your home page
+        form=RegistrationForm(request.POST)
+        if form.is_valid():
+            user=form.save(commit=False)
+            user.username=user.username.lower()
+            user.save()
+            messages.success(request,'you have succefully registered')
+            login(request,  user)
+            return redirect(request,'signup.html',{'form': form})
+
     else:
-        form = UserCreationForm()
-    return render(request, 'signup.html', {'form': form})
+            
+      return render(request, 'signup.html', {'form': form})
 
 def password_reset_view(request):
     if request.method == 'POST':
